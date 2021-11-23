@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Personel {
+  id String @id @default(cuid())
+
+  name    String
+  surname String
+  sex     String @db.VarChar(1)
+  phone   String
+  email   String @unique
+
+  registered_at DateTime @default(now())
+
+  role Int @default(1)
+}
+
+model Client {
+  id String @id @default(cuid())
+
+  name        String
+  surname     String
+  sex         String @db.VarChar(1)
+  personal_no String @db.VarChar(16)
+  phone       String
+  email       String?
+  address     String
+  country     String @db.VarChar(16)
+
+  joined_at DateTime  @default(now())
+  left_at   DateTime?
+
+  medication     Medication[]
+  family_members ClientFamilyMember[]
+
+  Visitation Visitation[]
+}
+
+model Room {
+  id           Int    @id @default(autoincrement())
+  display      String @db.VarChar(16)
+  pavilon      Int
+  level        Int
+  max_capacity Int
+}
+
+model Visitation {
+  id                   Int                @id @default(autoincrement())
+  client               Client             @relation(fields: [clientId], references: [id])
+  family_member        ClientFamilyMember @relation(fields: [clientFamilyMemberId], references: [id])
+  clientId             String
+  clientFamilyMemberId String
+}
+
+model ClientFamilyMember {
+  id         String       @id @default(cuid())
+  name       String
+  surname    String
+  relation   String
+  Client     Client?      @relation(fields: [clientId], references: [id])
+  clientId   String?
+  Visitation Visitation[]
+}
+
+model Medication {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(32)
+  Client              Client?               @relation(fields: [clientId], references: [id])
+  clientId            String?
+  MedicationDose      MedicationDose[]
+  MedicationInventory MedicationInventory[]
+}
+
+model MedicationDose {
+  id           Int        @id @default(autoincrement())
+  medication   Medication @relation(fields: [medicationId], references: [id])
+  day          String
+  time         String
+  medicationId Int
+}
+
+model MedicationInventory {
+  id           Int        @id @default(autoincrement())
+  medication   Medication @relation(fields: [medicationId], references: [id])
+  amount       Int
+  medicationId Int
+}
+
