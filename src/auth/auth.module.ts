@@ -10,7 +10,7 @@ import { LocalStrategy } from './strategies/local/local.strategy';
     PersonelModule,
     PassportModule,
     JwtModule.register({
-      secret: 'SECRETT',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '31d' },
     }),
   ],
