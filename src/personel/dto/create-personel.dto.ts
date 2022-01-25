@@ -7,6 +7,10 @@ export class CreatePersonelDto {
 
   @IsDefined()
   @IsString()
+  password: string;
+
+  @IsDefined()
+  @IsString()
   surname: string;
 
   @IsDefined()

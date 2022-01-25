@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,21 +9,18 @@ datasource db {
 
 model Personel {
   id String @id @default(cuid())
-
   name    String
   surname String
   sex     String @db.VarChar(1)
   phone   String
   email   String @unique
-
+  password String
   registered_at DateTime @default(now())
-
   role Int @default(1)
 }
 
 model Client {
   id String @id @default(cuid())
-
   name        String
   surname     String
   sex         String @db.VarChar(1)
@@ -35,21 +29,18 @@ model Client {
   email       String?
   address     String
   country     String @db.VarChar(16)
-
   joined_at DateTime  @default(now())
   left_at   DateTime?
-
   medication     Medication[]
   family_members ClientFamilyMember[]
-
   Visitation Visitation[]
 }
 
 model Room {
   id           Int    @id @default(autoincrement())
   display      String @db.VarChar(16)
-  pavilon      Int
-  level        Int
+  pavilon      Int @default(1)
+  level        Int @default(0)
   max_capacity Int
 }
 
@@ -94,4 +85,3 @@ model MedicationInventory {
   amount       Int
   medicationId Int
 }
-

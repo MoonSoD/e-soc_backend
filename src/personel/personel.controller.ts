@@ -16,8 +16,8 @@ export class PersonelController {
   constructor(private readonly personelService: PersonelService) {}
 
   @Post()
-  create(@Body() createPersonelDto: CreatePersonelDto) {
-    return this.personelService.create(createPersonelDto);
+  async create(@Body() createPersonelDto: CreatePersonelDto) {
+    return await this.personelService.create(createPersonelDto);
   }
 
   @Get()
