@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { PersonelService } from '../personel/personel.service';
-import { Personel } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
+import { Injectable } from "@nestjs/common";
+import { PersonelService } from "../personel/personel.service";
+import { Personel } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 
-import { JwtService } from '@nestjs/jwt';
+import { JwtService } from "@nestjs/jwt";
+import { CreatePersonelDto } from "../personel/dto/create-personel.dto";
 
 @Injectable()
 export class AuthService {
@@ -28,5 +29,20 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async register(createPersonelDto: CreatePersonelDto) {
+    const personel = await this.personelService.findOneByEmail(
+      createPersonelDto.email,
+    );
+
+    if (personel) {
+      return {
+        message: "A personel member with that email already exists",
+        statusCode: 409,
+      };
+    }
+
+    return await this.personelService.create(createPersonelDto);
   }
 }

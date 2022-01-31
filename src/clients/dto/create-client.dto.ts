@@ -4,7 +4,7 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-} from 'class-validator';
+} from "class-validator";
 
 export class CreateClientDto {
   @IsDefined()

@@ -8,39 +8,42 @@ datasource db {
 }
 
 model Personel {
-  id String @id @default(cuid())
-  name    String
-  surname String
-  sex     String @db.VarChar(1)
-  phone   String
-  email   String @unique
-  password String
+  id            String   @id @default(cuid())
+  name          String
+  surname       String
+  sex           String   @db.VarChar(1)
+  phone         String
+  email         String   @unique
+  password      String
   registered_at DateTime @default(now())
-  role Int @default(1)
+  role          Int      @default(1)
 }
 
 model Client {
-  id String @id @default(cuid())
-  name        String
-  surname     String
-  sex         String @db.VarChar(1)
-  personal_no String @db.VarChar(16)
-  phone       String
-  email       String?
-  address     String
-  country     String @db.VarChar(16)
-  joined_at DateTime  @default(now())
-  left_at   DateTime?
+  id             String               @id @default(cuid())
+  name           String
+  surname        String
+  sex            String               @db.VarChar(1)
+  personal_no    String               @db.VarChar(16)
+  phone          String
+  email          String?
+  address        String
+  country        String               @db.VarChar(16)
+  joined_at      DateTime             @default(now())
+  left_at        DateTime?
   medication     Medication[]
   family_members ClientFamilyMember[]
-  Visitation Visitation[]
+  Visitation     Visitation[]
+  Room           Room?                @relation(fields: [roomId], references: [id])
+  roomId         Int?
 }
 
 model Room {
-  id           Int    @id @default(autoincrement())
-  display      String @db.VarChar(16)
-  pavilon      Int @default(1)
-  level        Int @default(0)
+  id           Int      @id @default(autoincrement())
+  display      String   @db.VarChar(16)
+  pavilon      Int      @default(1)
+  level        Int      @default(0)
+  clients      Client[]
   max_capacity Int
 }
 
