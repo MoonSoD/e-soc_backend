@@ -31,7 +31,7 @@ model Client {
   country        String               @db.VarChar(16)
   joined_at      DateTime             @default(now())
   left_at        DateTime?
-  medication     Medication[]
+  medication     ClientMedication[]
   family_members ClientFamilyMember[]
   Visitation     Visitation[]
   Room           Room?                @relation(fields: [roomId], references: [id])
@@ -65,26 +65,27 @@ model ClientFamilyMember {
   Visitation Visitation[]
 }
 
-model Medication {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.VarChar(32)
-  Client              Client?               @relation(fields: [clientId], references: [id])
-  clientId            String?
-  MedicationDose      MedicationDose[]
-  MedicationInventory MedicationInventory[]
+model ClientMedication {
+  id                    Int                 @id @default(autoincrement())
+  medication            MedicationInventory @relation(fields: [medicationInventoryId], references: [id])
+  Client                Client              @relation(fields: [clientId], references: [id])
+  clientId              String
+  MedicationDose        MedicationDose[]
+  medicationInventoryId Int
 }
 
 model MedicationDose {
-  id           Int        @id @default(autoincrement())
-  medication   Medication @relation(fields: [medicationId], references: [id])
-  day          String
-  time         String
-  medicationId Int
+  id                 Int               @id @default(autoincrement())
+  day                String
+  time               String
+  medicationId       Int
+  ClientMedication   ClientMedication? @relation(fields: [clientMedicationId], references: [id])
+  clientMedicationId Int?
 }
 
 model MedicationInventory {
-  id           Int        @id @default(autoincrement())
-  medication   Medication @relation(fields: [medicationId], references: [id])
-  amount       Int
-  medicationId Int
+  id               Int                @id @default(autoincrement())
+  amount           Int
+  suklId           String
+  ClientMedication ClientMedication[]
 }

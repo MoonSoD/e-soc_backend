@@ -27,9 +27,9 @@ export class CreateClientDto {
   @IsPhoneNumber()
   phone: string;
 
-  @IsDefined()
+  @IsOptional()
   @IsEmail()
-  email: string;
+  email?: string;
 
   @IsDefined()
   @IsString()
