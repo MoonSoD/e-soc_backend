@@ -67,25 +67,23 @@ model ClientFamilyMember {
 
 model ClientMedication {
   id                    Int                 @id @default(autoincrement())
-  medication            MedicationInventory @relation(fields: [medicationInventoryId], references: [id])
+  medication            MedicationInventory @relation(fields: [medicationInventoryId], references: [suklId])
   Client                Client              @relation(fields: [clientId], references: [id])
   clientId              String
   MedicationDose        MedicationDose[]
-  medicationInventoryId Int
+  medicationInventoryId String
 }
 
 model MedicationDose {
   id                 Int               @id @default(autoincrement())
   day                String
   time               String
-  medicationId       Int
   ClientMedication   ClientMedication? @relation(fields: [clientMedicationId], references: [id])
   clientMedicationId Int?
 }
 
 model MedicationInventory {
-  id               Int                @id @default(autoincrement())
+  suklId           String             @id
   amount           Int
-  suklId           String
   ClientMedication ClientMedication[]
 }

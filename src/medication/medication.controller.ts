@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { MedicationService } from "./medication.service";
 import { CreateMedicationDto } from "./dto/create-medication.dto";
@@ -23,6 +24,11 @@ export class MedicationController {
   @Get()
   findAll() {
     return this.medicationService.findAll();
+  }
+
+  @Get()
+  findAllByClient(@Query("clientId") clientId: string) {
+    return this.medicationService.findAllByClient(clientId);
   }
 
   @Get(":id")

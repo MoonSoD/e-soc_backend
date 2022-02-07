@@ -1,5 +1,10 @@
 import { IsArray, IsDefined, IsOptional, IsString } from "class-validator";
 
+interface Dose {
+  day: string;
+  time: string;
+}
+
 export class CreateMedicationDto {
   @IsDefined()
   @IsString()
@@ -11,5 +16,5 @@ export class CreateMedicationDto {
 
   @IsOptional()
   @IsArray()
-  doses?: [];
+  doses?: Dose[];
 }
