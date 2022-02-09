@@ -32,7 +32,6 @@ model Client {
   joined_at      DateTime             @default(now())
   left_at        DateTime?
   medication     ClientMedication[]
-  family_members ClientFamilyMember[]
   Visitation     Visitation[]
   Room           Room?                @relation(fields: [roomId], references: [id])
   roomId         Int?
@@ -50,19 +49,9 @@ model Room {
 model Visitation {
   id                   Int                @id @default(autoincrement())
   client               Client             @relation(fields: [clientId], references: [id])
-  family_member        ClientFamilyMember @relation(fields: [clientFamilyMemberId], references: [id])
   clientId             String
-  clientFamilyMemberId String
-}
-
-model ClientFamilyMember {
-  id         String       @id @default(cuid())
-  name       String
-  surname    String
-  relation   String
-  Client     Client?      @relation(fields: [clientId], references: [id])
-  clientId   String?
-  Visitation Visitation[]
+  note                 String
+  dateTime             DateTime
 }
 
 model ClientMedication {

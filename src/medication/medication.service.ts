@@ -8,22 +8,21 @@ export class MedicationService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createMedicationDto: CreateMedicationDto) {
-    const createdClientMedication =
-      await this.prismaService.clientMedication.create({
-        data: {
-          medication: {
-            connect: { suklId: createMedicationDto.suklId }, // join id from SUKL
-          },
-          Client: {
-            connect: { id: createMedicationDto.clientId }, // join client id
-          },
-          MedicationDose: {
-            createMany: {
-              data: createMedicationDto?.doses,
-            },
+    const createdClientMedication = await this.prismaService.clientMedication.create({
+      data: {
+        medication: {
+          connect: { suklId: createMedicationDto.suklId }, // join id from SUKL
+        },
+        Client: {
+          connect: { id: createMedicationDto.clientId }, // join client id
+        },
+        MedicationDose: {
+          createMany: {
+            data: createMedicationDto?.doses,
           },
         },
-      });
+      },
+    });
 
     return {
       message: "Created client medication with doses",
@@ -43,8 +42,7 @@ export class MedicationService {
   };
 
   async findAll() {
-    const clientMedicationList =
-      await this.prismaService.clientMedication.findMany(this.findQuery);
+    const clientMedicationList = await this.prismaService.clientMedication.findMany(this.findQuery);
 
     return {
       data: clientMedicationList,
@@ -52,11 +50,10 @@ export class MedicationService {
   }
 
   async findAllByClient(clientId: string) {
-    const clientMedicationList =
-      await this.prismaService.clientMedication.findMany({
-        ...this.findQuery,
-        where: { clientId: clientId },
-      });
+    const clientMedicationList = await this.prismaService.clientMedication.findMany({
+      ...this.findQuery,
+      where: { clientId: clientId },
+    });
 
     return {
       data: clientMedicationList,
@@ -64,11 +61,10 @@ export class MedicationService {
   }
 
   async findOne(id: number) {
-    const clientMedication =
-      await this.prismaService.clientMedication.findUnique({
-        ...this.findQuery,
-        where: { id },
-      });
+    const clientMedication = await this.prismaService.clientMedication.findUnique({
+      ...this.findQuery,
+      where: { id },
+    });
 
     return {
       data: clientMedication,

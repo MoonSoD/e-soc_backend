@@ -10,11 +10,21 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post("login")
   async login(@Req() req) {
-    return this.authService.login(req.user);
+    const loggedIn = this.authService.login(req.user);
+
+    return {
+      data: loggedIn,
+      message: "User logged in",
+    };
   }
 
   @Post("register")
   async register(@Body() createPersonelDto: CreatePersonelDto) {
-    return this.authService.register(createPersonelDto);
+    const registered = this.authService.register(createPersonelDto);
+
+    return {
+      data: registered,
+      message: "User registered",
+    };
   }
 }

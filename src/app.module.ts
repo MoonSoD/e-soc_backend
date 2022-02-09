@@ -8,6 +8,7 @@ import { RoomsModule } from "./rooms/rooms.module";
 import { AuthModule } from "./auth/auth.module";
 import { MedicationModule } from "./medication/medication.module";
 import { ExportModule } from "./utils/export/export.module";
+import { VisitationsModule } from './visitations/visitations.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ExportModule } from "./utils/export/export.module";
     AuthModule,
     MedicationModule,
     ExportModule,
+    VisitationsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
