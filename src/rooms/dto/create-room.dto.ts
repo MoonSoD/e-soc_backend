@@ -1,10 +1,4 @@
-import {
-  IsDefined,
-  IsInt,
-  IsOptional,
-  IsString,
-  Length,
-} from "class-validator";
+import { IsDefined, IsInt, IsOptional, IsString, Length } from "class-validator";
 
 export class CreateRoomDto {
   @IsDefined()

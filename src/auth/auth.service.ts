@@ -8,10 +8,7 @@ import { CreatePersonelDto } from "../personel/dto/create-personel.dto";
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private personelService: PersonelService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private personelService: PersonelService, private jwtService: JwtService) {}
 
   async validatePersonel(email: string, password: string): Promise<Personel> {
     const personel = await this.personelService.findOneByEmail(email);
@@ -32,9 +29,7 @@ export class AuthService {
   }
 
   async register(createPersonelDto: CreatePersonelDto) {
-    const personel = await this.personelService.findOneByEmail(
-      createPersonelDto.email,
-    );
+    const personel = await this.personelService.findOneByEmail(createPersonelDto.email);
 
     if (personel) {
       return {

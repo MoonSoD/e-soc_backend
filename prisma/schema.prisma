@@ -8,33 +8,33 @@ datasource db {
 }
 
 model Personel {
-  id            String   @id @default(cuid())
-  name          String
-  surname       String
-  sex           String   @db.VarChar(1)
-  phone         String
-  email         String   @unique
-  password      String
-  registered_at DateTime @default(now())
-  role          Int      @default(1)
+  id             String           @id @default(cuid())
+  name           String
+  surname        String
+  sex            String           @db.VarChar(1)
+  phone          String
+  email          String           @unique
+  password       String
+  registered_at  DateTime         @default(now())
+  role           Int              @default(1)
+  ReportRevision ReportRevision[]
 }
 
 model Client {
-  id             String               @id @default(cuid())
-  name           String
-  surname        String
-  sex            String               @db.VarChar(1)
-  personal_no    String               @db.VarChar(16)
-  phone          String
-  email          String?
-  address        String
-  country        String               @db.VarChar(16)
-  joined_at      DateTime             @default(now())
-  left_at        DateTime?
-  medication     ClientMedication[]
-  Visitation     Visitation[]
-  Room           Room?                @relation(fields: [roomId], references: [id])
-  roomId         Int?
+  id          String       @id @default(cuid())
+  name        String
+  surname     String
+  sex         String       @db.VarChar(1)
+  personal_no String       @db.VarChar(16)
+  phone       String
+  email       String?
+  address     String
+  country     String       @db.VarChar(16)
+  joined_at   DateTime     @default(now())
+  left_at     DateTime?
+  Visitation  Visitation[]
+  Room        Room?        @relation(fields: [roomId], references: [id])
+  roomId      Int?
 }
 
 model Room {
@@ -47,32 +47,25 @@ model Room {
 }
 
 model Visitation {
-  id                   Int                @id @default(autoincrement())
-  client               Client             @relation(fields: [clientId], references: [id])
-  clientId             String
-  note                 String
-  dateTime             DateTime
+  id       Int      @id @default(autoincrement())
+  client   Client   @relation(fields: [clientId], references: [id])
+  clientId String
+  note     String
+  dateTime DateTime
 }
 
-model ClientMedication {
-  id                    Int                 @id @default(autoincrement())
-  medication            MedicationInventory @relation(fields: [medicationInventoryId], references: [suklId])
-  Client                Client              @relation(fields: [clientId], references: [id])
-  clientId              String
-  MedicationDose        MedicationDose[]
-  medicationInventoryId String
+model Report {
+  id        Int              @id @default(autoincrement())
+  date      DateTime         @default(now())
+  type      Int // 1 day, 0 night
+  revisions ReportRevision[]
 }
 
-model MedicationDose {
-  id                 Int               @id @default(autoincrement())
-  day                String
-  time               String
-  ClientMedication   ClientMedication? @relation(fields: [clientMedicationId], references: [id])
-  clientMedicationId Int?
-}
-
-model MedicationInventory {
-  suklId           String             @id
-  amount           Int
-  ClientMedication ClientMedication[]
+model ReportRevision {
+  id       Int      @id @default(autoincrement())
+  content  String
+  report   Report   @relation(fields: [reportId], references: [id])
+  reportId Int
+  editor   Personel @relation(fields: [editorId], references: [id])
+  editorId String
 }

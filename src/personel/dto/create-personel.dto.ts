@@ -1,13 +1,4 @@
-import {
-  IsDefined,
-  IsEmail,
-  IsInt,
-  IsOptional,
-  IsPhoneNumber,
-  IsString,
-  Max,
-  Min,
-} from "class-validator";
+import { IsDefined, IsEmail, IsInt, IsOptional, IsPhoneNumber, IsString, Max, Min } from "class-validator";
 
 export class CreatePersonelDto {
   @IsDefined()

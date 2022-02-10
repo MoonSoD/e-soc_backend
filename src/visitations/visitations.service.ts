@@ -34,7 +34,7 @@ export class VisitationsService {
         { header: "dátum a čas", key: "dateTime", width: 20 },
         { header: "poznámka", key: "note", width: 50 },
       ],
-      visitations.map((visit) => ({ visit, client: `${visit.client.name} ${visit.client.surname}` })),
+      visitations.map((visit) => ({ ...visit, client: `${visit.client.name} ${visit.client.surname}` })),
     );
 
     return exportedSheet;
