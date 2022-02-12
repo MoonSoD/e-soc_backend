@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -63,6 +64,7 @@ model Report {
 
 model ReportRevision {
   id       Int      @id @default(autoincrement())
+  dateTime DateTime @default(now())
   content  String
   report   Report   @relation(fields: [reportId], references: [id])
   reportId Int
