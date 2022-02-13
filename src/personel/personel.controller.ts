@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/common";
 import { PersonelService } from "./personel.service";
 import { CreatePersonelDto } from "./dto/create-personel.dto";
 import { UpdatePersonelDto } from "./dto/update-personel.dto";
 import { Role, Roles } from "./roles/role.decorator";
+import { Request } from "express";
 
 @Controller("personel")
 export class PersonelController {
@@ -36,6 +37,13 @@ export class PersonelController {
 
     return {
       data: foundPersonelMember,
+    };
+  }
+
+  @Get("self")
+  async findSelf(@Req() request: Request) {
+    return {
+      data: request.user,
     };
   }
 

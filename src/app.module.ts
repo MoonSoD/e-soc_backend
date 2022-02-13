@@ -8,10 +8,20 @@ import { RoomsModule } from "./rooms/rooms.module";
 import { AuthModule } from "./auth/auth.module";
 import { ExportModule } from "./utils/export/export.module";
 import { VisitationsModule } from "./visitations/visitations.module";
-import { ReportsModule } from './reports/reports.module';
+import { ReportsModule } from "./reports/reports.module";
+import { StatsModule } from "./stats/stats.module";
 
 @Module({
-  imports: [PersonelModule, ClientsModule, RoomsModule, AuthModule, ExportModule, VisitationsModule, ReportsModule],
+  imports: [
+    PersonelModule,
+    ClientsModule,
+    RoomsModule,
+    AuthModule,
+    ExportModule,
+    VisitationsModule,
+    ReportsModule,
+    StatsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

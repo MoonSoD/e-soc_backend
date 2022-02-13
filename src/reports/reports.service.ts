@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { CreateReportDto } from "./dto/create-report.dto";
-import { UpdateReportDto } from "./dto/update-report.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { Request } from "express";
 import { Personel } from "@prisma/client";
@@ -36,7 +35,7 @@ export class ReportsService {
         where: { id: report.id ?? -1 },
         create: {
           date: currentDate,
-          type: 1,
+          type: shiftHour === 6 ? 1 : 0,
           revisions: {
             create: {
               editor: { connect: { id: user.id } },

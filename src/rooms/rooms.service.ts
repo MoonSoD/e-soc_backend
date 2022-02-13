@@ -12,7 +12,7 @@ export class RoomsService {
   }
 
   findAll() {
-    return this.prismaService.room.findMany();
+    return this.prismaService.room.findMany({ include: { clients: true } });
   }
 
   findOne(id: number) {

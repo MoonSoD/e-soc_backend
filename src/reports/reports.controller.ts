@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Req } from "@nestjs/common";
 import { ReportsService } from "./reports.service";
 import { CreateReportDto } from "./dto/create-report.dto";
-import { UpdateReportDto } from "./dto/update-report.dto";
 import { Request } from "express";
 
 @Controller("reports")
