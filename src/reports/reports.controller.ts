@@ -16,6 +16,15 @@ export class ReportsController {
     };
   }
 
+  @Get("now")
+  async findTodays() {
+    const foundReports = await this.reportsService.findNow();
+
+    return {
+      data: foundReports,
+    };
+  }
+
   @Get()
   async findAll() {
     const foundReports = await this.reportsService.findAll();

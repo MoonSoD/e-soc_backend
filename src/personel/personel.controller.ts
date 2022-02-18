@@ -30,6 +30,13 @@ export class PersonelController {
     };
   }
 
+  @Get("self")
+  async findSelf(@Req() request: Request) {
+    return {
+      data: request.user,
+    };
+  }
+
   @Role(Roles.ADMIN)
   @Get(":id")
   async findOne(@Param("id") id: string) {
@@ -37,13 +44,6 @@ export class PersonelController {
 
     return {
       data: foundPersonelMember,
-    };
-  }
-
-  @Get("self")
-  async findSelf(@Req() request: Request) {
-    return {
-      data: request.user,
     };
   }
 

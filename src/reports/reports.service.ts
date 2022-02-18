@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { CreateReportDto } from "./dto/create-report.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { Request } from "express";
 import { Personel } from "@prisma/client";
+import dayjs, { Dayjs } from "dayjs";
 
 @Injectable()
 export class ReportsService {
@@ -57,6 +58,66 @@ export class ReportsService {
     });
 
     return reportBatch;
+  }
+
+  stripTimeToHours(time: Dayjs, hour: number) {
+    return time.set("hour", hour).set("minute", 0).set("second", 0);
+  }
+
+  async findNow() {
+    const now = dayjs();
+    const isNightShift = now.toDate().getHours() >= 18 || now.toDate().getHours() < 6;
+
+    const nightReportDate = () => {
+      if (isNightShift) {
+        return this.stripTimeToHours(now, 18);
+      }
+
+      return now.set("hour", 18).set("day", now.day() - 1);
+    };
+
+    const dayReportDate = () => {
+      if (isNightShift) {
+        if (now.get("hour") > 0 && now.get("hour") < 6) {
+          return this.stripTimeToHours(now.set("day", now.day() - 1), 6);
+        }
+      } else {
+        return this.stripTimeToHours(now, 6);
+      }
+
+      return this.stripTimeToHours(now, 6);
+    };
+
+    const lastFullReportRevision = await this.prismaService.$transaction(async (prisma) => {
+      const todayNightReport = await prisma.report.findFirst({
+        where: { AND: [{ date: { gte: nightReportDate().toDate() } }, { type: 0 }] },
+        include: {
+          revisions: {
+            orderBy: { dateTime: "desc" },
+            select: { editor: { select: { name: true, surname: true } }, content: true, dateTime: true },
+          },
+        },
+        orderBy: { date: "desc" },
+      });
+
+      const todayDayReport = await prisma.report.findFirst({
+        where: { AND: [{ date: { gte: dayReportDate().toDate() } }, { type: 1 }] },
+        include: {
+          revisions: {
+            orderBy: { dateTime: "desc" },
+            select: { editor: { select: { name: true, surname: true } }, content: true, dateTime: true },
+          },
+        },
+        orderBy: { date: "desc" },
+      });
+
+      return {
+        nightReport: todayNightReport,
+        dayReport: todayDayReport,
+      };
+    });
+
+    return lastFullReportRevision;
   }
 
   findAll() {

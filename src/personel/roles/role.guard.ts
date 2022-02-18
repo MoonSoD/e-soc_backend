@@ -13,11 +13,10 @@ export class RoleGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const role = this.reflector.get<number>("role", context.getHandler());
-    Logger.debug("Activating");
+
     if (!role) {
       return true;
     }
-    Logger.debug("Activating tru");
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
@@ -26,6 +25,8 @@ export class RoleGuard implements CanActivate {
       return true;
     }
 
-    return user.role === role;
+    console.log(`User role: ${user.role}, role: ${role}`);
+
+    return user.role === role || role === undefined;
   }
 }
