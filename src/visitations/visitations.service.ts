@@ -13,7 +13,7 @@ export class VisitationsService {
       data: {
         client: { connect: { id: createVisitationDto.clientId } },
         note: createVisitationDto.note,
-        dateTime: createVisitationDto.dateTime,
+        dateTime: new Date(createVisitationDto.dateTime),
       },
     });
   }

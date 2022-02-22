@@ -1,4 +1,4 @@
-import { IsDefined, IsEmail, IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import { IsDefined, IsEmail, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateClientDto {
   @IsDefined()
@@ -32,4 +32,8 @@ export class CreateClientDto {
   @IsDefined()
   @IsString()
   country: string;
+
+  @IsDefined()
+  @IsNumber()
+  roomId: number;
 }

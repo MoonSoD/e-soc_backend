@@ -25,8 +25,6 @@ export class RoleGuard implements CanActivate {
       return true;
     }
 
-    console.log(`User role: ${user.role}, role: ${role}`);
-
     return user.role === role || role === undefined;
   }
 }

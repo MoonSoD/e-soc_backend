@@ -1,4 +1,4 @@
-import { IsDate, IsDefined, IsOptional, IsString } from "class-validator";
+import { IsDate, IsDateString, IsDefined, IsOptional, IsString } from "class-validator";
 
 export class CreateVisitationDto {
   @IsDefined()
@@ -10,6 +10,6 @@ export class CreateVisitationDto {
   note: string;
 
   @IsDefined()
-  @IsDate()
+  @IsDateString()
   dateTime: string;
 }

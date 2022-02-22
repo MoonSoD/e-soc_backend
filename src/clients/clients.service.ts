@@ -15,7 +15,7 @@ export class ClientsService {
   }
 
   findAll() {
-    return this.prismaService.client.findMany();
+    return this.prismaService.client.findMany({ include: { Room: true } });
   }
 
   async exportAll() {
@@ -43,7 +43,7 @@ export class ClientsService {
   }
 
   findOne(id: string) {
-    return this.prismaService.client.findUnique({ where: { id } });
+    return this.prismaService.client.findUnique({ where: { id }, include: { Room: true } });
   }
 
   update(id: string, updateClientDto: UpdateClientDto) {

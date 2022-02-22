@@ -8,7 +8,6 @@ import { Role, Roles } from "../personel/roles/role.decorator";
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  @Role(Roles.ADMIN)
   @Post()
   async create(@Body() createRoomDto: CreateRoomDto) {
     const createdRoom = await this.roomsService.create(createRoomDto);
@@ -39,7 +38,6 @@ export class RoomsController {
     };
   }
 
-  @Role(Roles.ADMIN)
   @Patch(":id")
   async update(@Param("id") id: string, @Body() updateRoomDto: UpdateRoomDto) {
     const updatedRoom = await this.roomsService.update(+id, updateRoomDto);
@@ -50,7 +48,6 @@ export class RoomsController {
     };
   }
 
-  @Role(Roles.ADMIN)
   @Delete(":id")
   async remove(@Param("id") id: string) {
     const deletedRoom = await this.roomsService.remove(+id);

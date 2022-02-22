@@ -9,7 +9,6 @@ import { Response } from "express";
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
-  @Role(Roles.ADMIN)
   @Post()
   async create(@Body() createClientDto: CreateClientDto) {
     const createdClient = await this.clientsService.create(createClientDto);
@@ -56,7 +55,6 @@ export class ClientsController {
     };
   }
 
-  @Role(Roles.ADMIN)
   @Delete(":id")
   async remove(@Param("id") id: string) {
     const removedClient = await this.clientsService.remove(id);
