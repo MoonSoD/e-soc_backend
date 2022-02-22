@@ -22,8 +22,8 @@ import { JwtAuthGuard } from "./strategies/jwt/jwt-auth.guard";
   providers: [
     AuthService,
     LocalStrategy,
-    { provide: APP_GUARD, useClass: JwtAuthGuard },
-    { provide: APP_GUARD, useClass: RoleGuard },
+    //{ provide: APP_GUARD, useClass: JwtAuthGuard },
+    //{ provide: APP_GUARD, useClass: RoleGuard },
   ],
   exports: [AuthService],
 })
