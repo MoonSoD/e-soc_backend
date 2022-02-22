@@ -13,7 +13,7 @@ export class ReportsService {
     return currentHours === 6 ? 18 : 6;
   }
 
-  async create(createReportDto: CreateReportDto, request: Request) {
+  /*async create(createReportDto: CreateReportDto, request: Request) {
     const currentDate = new Date(Date.now());
     const user = request?.user as Personel;
     const shiftHour = currentDate.getHours() >= 6 && currentDate.getHours() < 18 ? 6 : 18;
@@ -35,17 +35,6 @@ export class ReportsService {
         },
       });
 
-      /*  if (!report) {
-          const rep = await prisma.report.create({
-            data: {
-              date: currentDate,
-              type: shiftHour === 6 ? 1 : 0,
-              revisions: { create: { editor: { connect: { id: user.id } }, content: createReportDto.content } },
-            },
-          });
-  
-          return rep;
-        }*/
       Logger.debug(report?.id);
       const rep = await prisma.report.upsert({
         where: { id: report?.id ?? -1 },
@@ -134,6 +123,9 @@ export class ReportsService {
 
     return lastFullReportRevision;
   }
+  */
+
+  //async create(createReportDto: CreateReportDto) {}
 
   findAll() {
     return this.prismaService.report.findMany({ include: { revisions: true } });

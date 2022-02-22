@@ -7,7 +7,7 @@ import { Request } from "express";
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
-  @Post()
+  /*@Post()
   async create(@Body() createReportDto: CreateReportDto, @Req() request: Request) {
     const createdReport = this.reportsService.create(createReportDto, request);
 
@@ -33,7 +33,7 @@ export class ReportsController {
       data: foundReports,
     };
   }
-
+*/
   @Get(":id")
   async findOne(@Param("id") id: string) {
     const foundReport = await this.reportsService.findOne(+id);
